@@ -3,44 +3,32 @@ import operator
 import sys
     
 data=[]
+headers=[]
 
-##line=0
+line=0
 reader = csv.reader(open("E:\\sample_nij_people.csv"))
-##headers = reader.next()
-# reader.next()
+
 for row in reader:
-    print(row)
-    data.append(row)
+   if line==0:
+       headers.append(row)
+
+       line = line+1
+   else:
+       #print (row)
+       data.append(row)
     
-
-##isHeader = True
-##for row in reader:
-##    
-##    if isHeader:
-##        isHeader=False
-##        headerRow = row
-##        for i in range(len(headerRow)):
-##            headerRow[i] = headerRow[i].replace(' ','_')
-##    else:
-##        data.append(row)
-
-##fFile = file("E:\\sample_nij_people.csv", "r")
-##
-##for f in fFile:
-##    fields = tuple(f.strip().split(","))
-##    if len(fields)==48: data.append(fields)
 
 print("Id  "  + "First Name   " + "Last Name " + "Religion")
 
-for id, external_id, i_status, last_name, first_name, sex, race, office, caseload, counselor, warrant_type, street, street2, city_id, state, zip, add_type, warrant_yo,	sup_type, sup_type2, specoff, city, av_address,	av_zone, av_status, av_score, av_side, age, age2, lat, lng, pp_start, pp_exp_date, warrant_date, res_date, date_of_birth, created_at, updated_at, release_date, photo, photo_thumb, active, v_d_education, v_d_religion, d_occupation, v_d_marital_status, v_d_nativity, d_nbr_children in data:
-    print id + "     " + first_name + "     " + last_name + "     " + v_d_religion
+data.sort(key=operator.itemgetter(43)) ## because religion is in 44th column
 
-data.sort(key=operator.itemgetter(43
-                                  )) ## because religion is in 44th column
+for id, external_id, i_status, last_name, first_name, sex, race, office, caseload, counselor, warrant_type, street, street2, city_id, state, zip, add_type, warrant_yo,    sup_type, sup_type2, specoff, city, av_address,	av_zone, av_status, av_score, av_side, age, age2, lat, lng, pp_start, pp_exp_date, warrant_date, res_date, date_of_birth, created_at, updated_at, release_date, photo, photo_thumb, active, v_d_education, v_d_religion, d_occupation, v_d_marital_status, v_d_nativity, d_nbr_children in data:
+    print (id + "     " + first_name + "     " + last_name + "     " + v_d_religion)
 
-wr = csv.writer(open("E:\\Sorted Sample.csv", "wb"))
-for item in data:
-    wr.writerow(item)
-    
 
+
+with open("E:\\Sorted Sample.csv", 'w') as f:
+  writer = csv.writer(f)
+  writer.writerows(headers)
+  writer.writerows(data)
 
